@@ -1,0 +1,16 @@
+syncs:
+  - direction: shopify_to_airtable
+    entity_type: order
+    interval_minutes: 5
+    conflict_strategy: last_write_wins
+    mapping_file: shopify_to_airtable.yaml
+  - direction: shopify_to_quickbooks
+    entity_type: order
+    interval_minutes: 10
+    conflict_strategy: source_priority
+    mapping_file: shopify_to_quickbooks.yaml
+  - direction: airtable_to_quickbooks
+    entity_type: contact
+    interval_minutes: 15
+    conflict_strategy: last_write_wins
+    mapping_file: airtable_to_quickbooks.yaml

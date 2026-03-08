@@ -1,0 +1,19 @@
+{
+  "name": "Data Sync Automation",
+  "nodes": [
+    {"id": "1", "type": "n8n-nodes-base.scheduleTrigger", "name": "Every 5 minutes",
+     "parameters": {"rule": {"interval": [{"field": "minutes", "minutesInterval": 5}]}}},
+    {"id": "2", "type": "n8n-nodes-base.httpRequest", "name": "Trigger All Syncs",
+     "parameters": {"method": "POST", "url": "http://localhost:8009/api/sync/trigger-all",
+                    "responseFormat": "json"}},
+    {"id": "3", "type": "n8n-nodes-base.httpRequest", "name": "Get Conflicts",
+     "parameters": {"method": "GET", "url": "http://localhost:8009/api/conflicts",
+                    "responseFormat": "json"}},
+    {"id": "4", "type": "n8n-nodes-base.noOp", "name": "Done"}
+  ],
+  "connections": {
+    "Every 5 minutes": {"main": [[{"node": "Trigger All Syncs", "type": "main", "index": 0}]]},
+    "Trigger All Syncs": {"main": [[{"node": "Get Conflicts", "type": "main", "index": 0}]]},
+    "Get Conflicts": {"main": [[{"node": "Done", "type": "main", "index": 0}]]}
+  }
+}

@@ -1,0 +1,25 @@
+source_system: shopify
+target_system: quickbooks
+entity_type: order
+mappings:
+  - source_field: order_number
+    target_field: InvoiceNumber
+    transform: convert
+    transform_config:
+      prefix: "SH-"
+  - source_field: customer_email
+    target_field: CustomerRef
+    transform: rename
+  - source_field: total_price
+    target_field: TotalAmt
+    transform: convert
+    transform_config:
+      to_type: float
+  - source_field: created_at
+    target_field: TxnDate
+    transform: rename
+  - source_field: line_items
+    target_field: LineItems
+    transform: convert
+    transform_config:
+      line_items_to_qb: true

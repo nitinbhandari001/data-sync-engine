@@ -1,0 +1,34 @@
+source_system: shopify
+target_system: airtable
+entity_type: order
+mappings:
+  - source_field: order_number
+    target_field: Order Number
+    transform: rename
+  - source_field: customer_email
+    target_field: Customer Email
+    transform: rename
+  - source_field: total_price
+    target_field: Total
+    transform: convert
+    transform_config:
+      to_type: float
+  - source_field: created_at
+    target_field: Order Date
+    transform: convert
+    transform_config:
+      date_format: "%m/%d/%Y"
+  - source_field: fulfillment_status
+    target_field: Status
+    transform: value_map
+    transform_config:
+      mapping:
+        fulfilled: Shipped
+        pending: Processing
+        unfulfilled: Pending
+  - source_field: line_items
+    target_field: Items
+    transform: concat
+    transform_config:
+      extract_field: title
+      separator: ", "

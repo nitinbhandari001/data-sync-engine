@@ -1,0 +1,16 @@
+source_system: airtable
+target_system: quickbooks
+entity_type: contact
+mappings:
+  - source_field: Name
+    target_field: DisplayName
+    transform: rename
+  - source_field: Email
+    target_field: PrimaryEmailAddr
+    transform: rename
+  - source_field: Company
+    target_field: CompanyName
+    transform: rename
+  - source_field: Phone
+    target_field: PrimaryPhone
+    transform: rename
